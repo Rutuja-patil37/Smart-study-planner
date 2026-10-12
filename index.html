@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="studyApp">
+<head>
+    <title>Study Planner</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    
+   
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body ng-controller="MainController">
+
+<div class="container">
+
+    <h1>📚Smart Study Planner</h1>
+
+   
+    <input type="text" ng-model="newSubject.name" placeholder="Subject">
+    <input type="number" ng-model="newSubject.days" placeholder="Days left">
+
+    <select ng-model="newSubject.difficulty">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+    </select>
+
+    <button ng-click="addSubject()">➕ Add Subject</button>
+
+    <!-- SUBJECT LIST -->
+    <div class="subject" ng-repeat="sub in subjects">
+
+        <div class="top">
+            <h3>{{sub.name}}</h3>
+            <span class="badge {{sub.difficulty}}">
+                {{sub.difficulty}}
+            </span>
+        </div>
+
+        <p>⏱ {{sub.hours}} hrs/day</p>
+
+        <!-- PROGRESS BAR -->
+        <div class="progress-bar">
+            <div class="progress" style="width: {{sub.progress}}%"></div>
+        </div>
+
+        <p>{{sub.progress}}%</p>
+
+        <button ng-click="markDone(sub)">✔ Done</button>
+        <button class="delete-btn" ng-click="deleteSubject($index)">🗑 Delete</button>
+    </div>
+
+    
+    <button ng-click="generatePlan()">📅 Generate Plan</button>
+
+    <div class="result" ng-if="plan">
+        <h3>AI Plan</h3>
+        <p ng-repeat="p in plan">{{p}}</p>
+    </div>
+
+   
+    <canvas id="chart"></canvas>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
